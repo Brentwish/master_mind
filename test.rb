@@ -1,5 +1,6 @@
 
 class Game
+  COLORS = ["W", "O", "B", "G", "R", "Y"]
   attr_accessor :win_seq
 
   def init(win_seq = "WWWW")
@@ -7,7 +8,6 @@ class Game
   end
 
   def get_seq
-    colors = ["W", "O", "B", "G", "R", "Y"]
     def each_element(a, b) #a is big set, b is subset
       ret_array = []
       b.each do |letter|
@@ -24,7 +24,7 @@ class Game
       if guess.size != 4
         puts "The sequence must be 4 colors long"
       else
-        inv_chars = each_element(colors, guess.split(""))
+        inv_chars = each_element(COLORS, guess.split(""))
         if inv_chars.size > 0
           inv_chars.each do |l|
             print "#{l}  "
