@@ -3,33 +3,20 @@ class Game
   COLORS = ["W", "O", "B", "G", "R", "Y"]
   attr_accessor :win_seq
 
-  def init(win_seq = "WWWW")
-    @win_seq = win_seq
-  end
-
   def get_seq
-    def each_element(a, b) #a is big set, b is subset
-      ret_array = []
-      b.each do |letter|
-        if !a.include?(letter)
-          ret_array.push(letter)
-        end
-      end
-      return ret_array
-    end
-
     while true do
       print "Your sequence: "
-      guess = gets.chomp.upcase
+      guess = gets.chomp.upcase.split("")
       if guess.size != 4
         puts "The sequence must be 4 colors long"
       else
-        inv_chars = each_element(COLORS, guess.split(""))
-        if inv_chars.size > 0
-          inv_chars.each do |l|
-            print "#{l}  "
+        inv_chars = guess - COLORS
+        if !inv_chars.empty?
+          if inv_chars.size > 1
+            puts "#{inv_chars.join(", ")} are invalid colors"
+          else
+            puts "#{inv_chars.first} is an invalid color"
           end
-          puts "is an/are invalid color(s)"
         else
           return guess
         end
@@ -39,6 +26,9 @@ class Game
 end
 
 the_game = Game.new
+
+puts "Please enter the winning sequence"
+the_game.win_seq = the_game.get_seq
 while true do
   my_seq = the_game.get_seq
   puts "#{my_seq}"
