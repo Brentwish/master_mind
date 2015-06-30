@@ -23,6 +23,23 @@ class Game
       end
     end
   end
+
+  def compare_seq(seq)
+    ret_array = []
+    seq.each_with_index do |color, i|
+      if seq[i] == win_seq[i]
+        ret_array.push("R")
+        seq[i] = nil
+      end
+    end
+    a = seq & win_seq
+    a.each_with_index do |color, i|
+      if a[i]
+        ret_array.push("W")
+      end
+    end
+    return ret_array
+  end
 end
 
 the_game = Game.new
@@ -32,4 +49,6 @@ the_game.win_seq = the_game.get_seq
 while true do
   my_seq = the_game.get_seq
   puts "#{my_seq}"
+  compare = the_game.compare_seq(my_seq)
+  puts "#{compare}"
 end
