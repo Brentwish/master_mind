@@ -25,17 +25,24 @@ class Game
   end
 
   def compare_seq(seq)
+    temp_seq = Array.new(win_seq)
     ret_array = []
     seq.each_with_index do |color, i|
-      if seq[i] == win_seq[i]
+      if seq[i] == temp_seq[i]
         ret_array.push("R")
         seq[i] = nil
+        temp_seq[i] = nil
       end
     end
-    a = seq & win_seq
-    a.each_with_index do |color, i|
-      if a[i]
+    seq = seq.compact
+    temp_seq = temp_seq.compact
+    seq.each_with_index do |color, i|
+      if temp_seq.include?(color)
         ret_array.push("W")
+        temp_seq[temp_seq.find_index(color)] = nil
+        seq[i] = nil
+        seq = seq.compact
+        temp_seq = temp_seq.compact
       end
     end
     return ret_array
